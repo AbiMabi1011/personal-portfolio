@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>All Projects | Abishanan Pathmarajah</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Glassmorphism Utilities */
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    /* Hide scrollbar for horizontal scrolling areas but keep functionality */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 relative overflow-x-hidden">
+
+  <!-- Background Blobs -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="blob bg-indigo-200 w-96 h-96 rounded-full -top-20 -left-20 mix-blend-multiply opacity-50 blur-3xl">
+    </div>
+    <div class="blob bg-amber-200 w-96 h-96 rounded-full bottom-40 right-10 mix-blend-multiply opacity-50 blur-3xl">
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full z-50 transition-all duration-300 pointer-events-none p-4" id="navbar">
+    <div class="max-w-7xl mx-auto pointer-events-auto">
+      <div class="glass rounded-full px-6 py-3 flex items-center justify-between shadow-lg ring-1 ring-white/50">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div
+            class="relative w-10 h-10 overflow-hidden rounded-full ring-2 ring-indigo-500/20 group-hover:ring-indigo-500 transition-all">
+            <img src="abi.JPG" alt="Profile"
+              class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+          </div>
+          <span class="font-bold text-lg tracking-tight text-slate-800">Abishanan.dev</span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-1 bg-slate-100/50 p-1 rounded-full border border-white/50">
+          <a href="index.html"
+            class="px-4 py-1.5 text-sm font-medium rounded-full text-slate-600 hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all"><i
+              class="fa-solid fa-arrow-left mr-2"></i> Back to Home</a>
+        </div>
+
+        <!-- Action / Mobile Toggle -->
+        <div class="flex items-center gap-3">
+          <a href="resume/Abishanan_Pathmarajah_Resume.pdf" target="_blank"
+            class="hidden sm:inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-slate-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+            <span>Resume</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="pt-32 pb-20 max-w-7xl mx-auto px-6 min-h-screen">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">Project <span
+          class="text-indigo-600">Showcase</span></h1>
+      <p class="text-slate-500 max-w-2xl mx-auto text-lg">A curated collection of my work across web, mobile, and
+        desktop platforms.</p>
+    </header>
+
+    <!-- Filters -->
+    <div class="mb-12">
+      <!-- Scrollable Container for Mobile -->
+      <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+
+        <!-- Category Filter -->
+        <div class="w-full md:w-auto overflow-x-auto no-scrollbar pb-2 md:pb-0">
+          <div
+            class="flex md:inline-flex items-center gap-2 px-2 py-2 rounded-full bg-white border border-slate-200 shadow-sm mx-auto min-w-max">
+            <button
+              class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-indigo-600 text-white shadow-md transition-all whitespace-nowrap"
+              data-filter="all">
+              All Projects
+            </button>
+            <button
+              class="filter-btn px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-indigo-600 transition-all whitespace-nowrap"
+              data-filter="web">
+              Web Dev
+            </button>
+            <button
+              class="filter-btn px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-indigo-600 transition-all whitespace-nowrap"
+              data-filter="mobile">
+              Mobile App
+            </button>
+            <button
+              class="filter-btn px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-indigo-600 transition-all whitespace-nowrap"
+              data-filter="desktop">
+              Desktop
+            </button>
+            <button
+              class="filter-btn px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-indigo-600 transition-all whitespace-nowrap"
+              data-filter="academic">
+              Academic
+            </button>
+          </div>
+        </div>
+
+        <!-- Status Filter (Dropdown like on mobile, chips on desktop) -->
+        <div class="flex items-center gap-2 bg-white px-2 py-2 rounded-full border border-slate-200 shadow-sm">
+          <button
+            class="status-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-800 text-white shadow-md transition-all"
+            data-status="any">
+            Any Status
+          </button>
+          <button
+            class="status-btn px-4 py-2 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 transition-all"
+            data-status="ongoing">
+            Ongoing
+          </button>
+          <button
+            class="status-btn px-4 py-2 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 transition-all"
+            data-status="completed">
+            Completed
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Results Count -->
+      <p id="result-count" class="text-center text-sm text-slate-400 mt-4">Showing all projects</p>
+    </div>
+
+    <!-- Grid -->
+    <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Project 1: Wanlanka -->
+      <article
+        class="project-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-slate-100 flex flex-col h-full"
+        data-category="web" data-status="ongoing">
+        <div class="h-48 overflow-hidden relative bg-indigo-50 flex items-center justify-center">
+          <i
+            class="fa-solid fa-suitcase-rolling text-5xl text-indigo-300 group-hover:scale-110 transition-transform duration-500"></i>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-lg font-bold text-slate-900">Wanlanka Tourist Service</h3>
+            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-green-100 text-green-700">Ongoing</span>
+          </div>
+          <p class="text-slate-500 text-sm mb-4">Laravel-based web application offering comprehensive tourist packages
+            including vehicles, accommodation, and guides.</p>
+          <div class="mt-auto flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">Laravel</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">MySQL</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">Bootstrap</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2: PetCare -->
+      <article
+        class="project-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-slate-100 flex flex-col h-full"
+        data-category="mobile" data-status="completed">
+        <div class="h-48 overflow-hidden relative bg-amber-50 flex items-center justify-center">
+          <i
+            class="fa-solid fa-paw text-5xl text-amber-300 group-hover:scale-110 transition-transform duration-500"></i>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-lg font-bold text-slate-900">PetCare Application</h3>
+            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-indigo-100 text-indigo-700">Completed</span>
+          </div>
+          <p class="text-slate-500 text-sm mb-4">Full-stack pet care platform with Laravel backend and Flutter mobile
+            app for managing pet health and appointments.</p>
+          <div class="mt-auto flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">Flutter</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">Laravel</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">Firebase</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3: Hospital -->
+      <article
+        class="project-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-slate-100 flex flex-col h-full"
+        data-category="desktop" data-status="completed">
+        <div class="h-48 overflow-hidden relative bg-emerald-50 flex items-center justify-center">
+          <i
+            class="fa-solid fa-hospital text-5xl text-emerald-300 group-hover:scale-110 transition-transform duration-500"></i>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-lg font-bold text-slate-900">Hospital Management</h3>
+            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-indigo-100 text-indigo-700">Academic</span>
+          </div>
+          <p class="text-slate-500 text-sm mb-4">Java-based system for managing patient records, doctor schedules, and
+            medicine stock inventory.</p>
+          <div class="mt-auto flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">Java</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">NetBeans</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">MySQL</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 4: Handicrafts -->
+      <article
+        class="project-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-slate-100 flex flex-col h-full"
+        data-category="web" data-status="completed">
+        <div class="h-48 overflow-hidden relative bg-purple-50 flex items-center justify-center">
+          <i
+            class="fa-solid fa-store text-5xl text-purple-300 group-hover:scale-110 transition-transform duration-500"></i>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-lg font-bold text-slate-900">Handicrafts Selling</h3>
+            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-indigo-100 text-indigo-700">Completed</span>
+          </div>
+          <p class="text-slate-500 text-sm mb-4">E-commerce platform for selling handicrafts with cart functionality and
+            admin management.</p>
+          <div class="mt-auto flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">PHP</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">MySQL</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">JS</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 5: Student Records -->
+      <article
+        class="project-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-slate-100 flex flex-col h-full"
+        data-category="web" data-status="completed">
+        <div class="h-48 overflow-hidden relative bg-blue-50 flex items-center justify-center">
+          <i
+            class="fa-solid fa-id-card text-5xl text-blue-300 group-hover:scale-110 transition-transform duration-500"></i>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-lg font-bold text-slate-900">Student Records System</h3>
+            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-indigo-100 text-indigo-700">Completed</span>
+          </div>
+          <p class="text-slate-500 text-sm mb-4">Web system using JSON and XML for data storage to manage student
+            records dynamically.</p>
+          <div class="mt-auto flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">HTML/CSS</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">jQuery</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">XML</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 6: Mobile App Y2S1 -->
+      <article
+        class="project-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-slate-100 flex flex-col h-full"
+        data-category="mobile" data-status="completed">
+        <div class="h-48 overflow-hidden relative bg-orange-50 flex items-center justify-center">
+          <i
+            class="fa-solid fa-mobile-screen text-5xl text-orange-300 group-hover:scale-110 transition-transform duration-500"></i>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-lg font-bold text-slate-900">Group Mobile App</h3>
+            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-indigo-100 text-indigo-700">Completed</span>
+          </div>
+          <p class="text-slate-500 text-sm mb-4">Android application featuring real-time data sync with Firebase and AI
+            integration.</p>
+          <div class="mt-auto flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">Java</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">Android</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">Firebase</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 7: UI/UX Prototyping -->
+      <article
+        class="project-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-slate-100 flex flex-col h-full"
+        data-category="academic" data-status="completed">
+        <div class="h-48 overflow-hidden relative bg-slate-100 flex items-center justify-center">
+          <i
+            class="fa-solid fa-pen-ruler text-5xl text-slate-300 group-hover:scale-110 transition-transform duration-500"></i>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-lg font-bold text-slate-900">UI/UX Prototyping</h3>
+            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-indigo-100 text-indigo-700">Completed</span>
+          </div>
+          <p class="text-slate-500 text-sm mb-4">Low-fidelity sketches and high-fidelity interactive prototypes designed
+            in Figma.</p>
+          <div class="mt-auto flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">Figma</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">UX Research</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 8: Warehouse Management -->
+      <article
+        class="project-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-slate-100 flex flex-col h-full"
+        data-category="web" data-status="completed">
+        <div class="h-48 overflow-hidden relative bg-teal-50 flex items-center justify-center">
+          <i
+            class="fa-solid fa-warehouse text-5xl text-teal-300 group-hover:scale-110 transition-transform duration-500"></i>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-lg font-bold text-slate-900">Shiproof WMS</h3>
+            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-indigo-100 text-indigo-700">Completed</span>
+          </div>
+          <p class="text-slate-500 text-sm mb-4">Warehouse Management System for tracking stock levels, shipments, and
+            staff operations.</p>
+          <div class="mt-auto flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">PHP</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">SQL</span>
+            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium">HTML/CSS</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- No Results State -->
+    <div id="no-results" class="hidden text-center py-20">
+      <div class="inline-block p-4 rounded-full bg-slate-100 text-slate-400 mb-4">
+        <i class="fa-solid fa-magnifying-glass text-3xl"></i>
+      </div>
+      <h3 class="text-xl font-bold text-slate-900">No projects found</h3>
+      <p class="text-slate-500 mt-2">Try adjusting your filters to see more results.</p>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-100 py-8">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-slate-500 text-sm">© 2025 Abishanan Pathmarajah. All rights reserved.</p>
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="text-sm text-slate-500 hover:text-indigo-600 transition-colors">Home</a>
+        <a href="#projects" class="text-sm text-slate-500 hover:text-indigo-600 transition-colors">Projects</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Filter Logic
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const statusBtns = document.querySelectorAll('.status-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+    const noResults = document.getElementById('no-results');
+    const resultCount = document.getElementById('result-count');
+
+    let currentCategory = 'all';
+    let currentStatus = 'any';
+
+    function setActive(buttons, activeBtn, activeClasses, inactiveClasses) {
+      buttons.forEach(btn => {
+        btn.classList.remove(...activeClasses.split(' '));
+        btn.classList.add(...inactiveClasses.split(' '));
+      });
+      activeBtn.classList.remove(...inactiveClasses.split(' '));
+      activeBtn.classList.add(...activeClasses.split(' '));
+    }
+
+    function filterProjects() {
+      let visibleCount = 0;
+
+      projectItems.forEach(item => {
+        const itemCategory = item.dataset.category;
+        const itemStatus = item.dataset.status;
+
+        const categoryMatch = currentCategory === 'all' || currentCategory === itemCategory;
+        const statusMatch = currentStatus === 'any' || currentStatus === itemStatus;
+
+        if (categoryMatch && statusMatch) {
+          item.style.display = 'flex';
+          // Re-trigger animation if needed
+          item.classList.add('animate-in', 'fade-in', 'zoom-in');
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+          item.classList.remove('animate-in', 'fade-in', 'zoom-in');
+        }
+      });
+
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+
+      resultCount.textContent = `Showing ${visibleCount} project${visibleCount !== 1 ? 's' : ''}`;
+    }
+
+    // Category Click Handlers
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentCategory = btn.dataset.filter;
+        setActive(
+          filterBtns,
+          btn,
+          'bg-indigo-600 text-white shadow-md',
+          'text-slate-600 hover:bg-slate-100 hover:text-indigo-600'
+        );
+        filterProjects();
+      });
+    });
+
+    // Status Click Handlers
+    statusBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentStatus = btn.dataset.status;
+        setActive(
+          statusBtns,
+          btn,
+          'bg-slate-800 text-white shadow-md',
+          'text-slate-600 hover:bg-slate-100'
+        );
+        filterProjects();
+      });
+    });
+
+    // Initialize
+    filterProjects();
+  </script>
+</body>
+
+</html>
