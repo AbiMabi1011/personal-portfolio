@@ -169,7 +169,7 @@ export function Hero() {
                   {STATS.map((s) => (
                     <div key={s.label}>
                       <dt className="font-display text-3xl font-bold text-white tabular-nums">
-                        <CountUp to={s.value} suffix={s.suffix} raw={s.raw} start />
+                        <CountUp to={s.value} suffix={s.suffix} raw={s.raw ?? false} start />
                       </dt>
                       <dd className="mt-1 font-mono text-[11px] leading-snug text-white/45">
                         {s.label}
