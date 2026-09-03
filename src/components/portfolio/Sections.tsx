@@ -421,25 +421,22 @@ function ProjectCard({
     <Tilt className="h-full rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#071324] shadow-sm hover:shadow-xl hover:shadow-blue-950/10 transition-all flex flex-col justify-between overflow-hidden group">
       <div>
         {/* Live Site Interactive Browser Container */}
-        <div className="relative h-[340px] sm:h-[420px] w-full bg-slate-950 border-b border-slate-200 dark:border-slate-800 overflow-hidden group/header">
+        <div className="relative aspect-[16/11] sm:aspect-[16/10] md:h-[400px] w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden group/header">
           {project.demoUrl ? (
-            <div className="absolute inset-0 z-10 bg-slate-950 overflow-hidden">
-              {/* Scaled Desktop Viewport so entire web layout, navbar, heroes and elements fit without being squished */}
-              <div className="w-[1280px] h-[850px] origin-top-left scale-[0.27] sm:scale-[0.44] md:scale-[0.48] lg:scale-[0.52] pointer-events-auto">
-                <iframe
-                  src={project.demoUrl}
-                  title={`${project.title} live preview`}
-                  onLoad={() => setIframeLoaded(true)}
-                  className={cn(
-                    "w-full h-full border-0 transition-opacity duration-500 bg-white",
-                    iframeLoaded ? "opacity-100" : "opacity-0"
-                  )}
-                  loading="lazy"
-                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                />
-              </div>
+            <div className="absolute inset-0 z-10 bg-white dark:bg-slate-900 overflow-hidden">
+              <iframe
+                src={project.demoUrl}
+                title={`${project.title} live preview`}
+                onLoad={() => setIframeLoaded(true)}
+                className={cn(
+                  "w-full h-full border-0 transition-opacity duration-500 bg-white",
+                  iframeLoaded ? "opacity-100" : "opacity-0"
+                )}
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+              />
               {!iframeLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center bg-slate-950/90 backdrop-blur-sm z-20 pointer-events-none">
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm z-20 pointer-events-none">
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-blue-600/90 text-white font-mono text-[11px] shadow-lg animate-pulse">
                     <span className="h-2 w-2 rounded-full bg-white animate-ping" />
                     <span>Connecting Live Site...</span>
@@ -657,18 +654,16 @@ export function Projects() {
         {activeProject && (
           <DialogContent className="w-[95vw] sm:max-w-4xl bg-white dark:bg-[#071324] border-slate-200 dark:border-slate-800 p-0 overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl max-h-[92vh] flex flex-col">
             {/* Live Interactive Project Window */}
-            <div className="relative h-[280px] sm:h-[400px] w-full shrink-0 overflow-hidden bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+            <div className="relative h-[320px] sm:h-[480px] w-full shrink-0 overflow-hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
               {activeProject.demoUrl ? (
-                <div className="w-full h-full relative overflow-hidden bg-slate-950">
-                  <div className="w-[1280px] h-[800px] origin-top-left scale-[0.30] sm:scale-[0.55] md:scale-[0.65] lg:scale-[0.70]">
-                    <iframe
-                      src={activeProject.demoUrl}
-                      title={`${activeProject.title} live preview`}
-                      className="w-full h-full border-0 bg-white"
-                      loading="lazy"
-                      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                    />
-                  </div>
+                <div className="w-full h-full relative overflow-hidden bg-white dark:bg-slate-900">
+                  <iframe
+                    src={activeProject.demoUrl}
+                    title={`${activeProject.title} live preview`}
+                    className="w-full h-full border-0 bg-white"
+                    loading="lazy"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                  />
                 </div>
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-slate-400 font-mono text-xs">
