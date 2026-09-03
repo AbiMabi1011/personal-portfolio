@@ -20,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { Magnetic, Reveal, Section, SectionLabel, Tilt } from "./primitives";
+import profilePhoto from "../../images/abi.jpeg";
 import {
   ABOUT_PARAGRAPHS,
   APPROACH,
@@ -67,7 +68,7 @@ export function About() {
               {/* Profile Image */}
               <div className="shrink-0 w-32 h-32 sm:w-36 sm:h-36 rounded-2xl overflow-hidden border-2 border-blue-500/40 shadow-md">
                 <img
-                  src="/images/profile.jpg"
+                  src={profilePhoto}
                   alt="Abishanan Pathmarajah"
                   className="w-full h-full object-cover object-center"
                 />

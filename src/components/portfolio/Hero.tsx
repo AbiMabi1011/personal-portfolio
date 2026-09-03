@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Magnetic, CountUp } from "./primitives";
 import { PROJECTS, STATS, MARQUEE } from "./data";
+import profilePhoto from "../../images/abi.jpeg";
 
 export function Hero() {
   const reduced = useReducedMotion();
@@ -59,7 +60,7 @@ export function Hero() {
                   <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-500 opacity-30 blur-md group-hover/img:opacity-60 transition duration-500" />
                   <div className="aspect-[4/5] w-full rounded-2xl overflow-hidden border-2 border-blue-200 dark:border-blue-600/60 shadow-2xl relative">
                     <img
-                      src="/images/profile.jpg"
+                      src={profilePhoto}
                       alt="Abishanan Pathmarajah"
                       className="w-full h-full object-cover object-center group-hover/img:scale-105 transition-transform duration-500"
                     />
