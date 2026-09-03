@@ -4,8 +4,9 @@ import { cn } from "@/lib/utils";
 
 export function SectionLabel({ children }: { children: string }) {
   return (
-    <span className="font-mono text-xs font-medium tracking-wide text-blue">
-      // {children}
+    <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50/80 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 font-sans text-[11px] font-bold tracking-widest text-blue-700 dark:text-blue-300 uppercase shadow-sm">
+      <span className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400" />
+      {children}
     </span>
   );
 }
@@ -24,9 +25,9 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      initial={{ opacity: 0, y: 35, scale: 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, margin: "-80px" }}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
@@ -38,27 +39,38 @@ export function Section({
   id,
   label,
   title,
+  className,
   children,
 }: {
   id: string;
   label: string;
   title?: string;
+  className?: string;
   children: ReactNode;
 }) {
+  const reduced = useReducedMotion();
+
   return (
-    <section id={id} className="scroll-mt-28 py-20 md:py-28">
-      <div className="mx-auto w-full max-w-[1160px] px-5 md:px-8">
+    <motion.section
+      id={id}
+      className={cn("scroll-mt-28 py-20 md:py-28 transition-all", className)}
+      initial={reduced ? false : { opacity: 0, y: 45 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false, margin: "-100px" }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="mx-auto w-full max-w-[1400px] px-5 md:px-8">
         <Reveal>
           <SectionLabel>{label}</SectionLabel>
           {title ? (
-            <h2 className="mt-3 max-w-2xl font-display text-3xl leading-tight font-bold text-ink md:text-[40px]">
+            <h2 className="mt-3 max-w-2xl font-display text-3xl leading-tight font-bold text-[#0a192f] dark:text-white md:text-[40px]">
               {title}
             </h2>
           ) : null}
         </Reveal>
         <div className="mt-10 md:mt-14">{children}</div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

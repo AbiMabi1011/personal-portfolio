@@ -1,213 +1,190 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { CountUp, Magnetic } from "./primitives";
-import { STATS } from "./data";
-
-type Step = { cmd: string; out?: string; progress?: boolean; done?: string };
-
-const STEPS: Step[] = [
-  { cmd: "whoami", out: "abishanan_pathmarajah" },
-  { cmd: "role --current", out: "Software Engineer Intern · Final-year CS & SE undergrad" },
-  { cmd: "stack --primary", out: "React · Node.js · Laravel · MySQL / MongoDB" },
-  {
-    cmd: "build ./portfolio --prod",
-    progress: true,
-    done: "✓ Build successful — welcome.",
-  },
-];
-
-const BAR_WIDTH = 28;
-
-function Clock() {
-  const [now, setNow] = useState<string>("");
-  useEffect(() => {
-    const tick = () =>
-      setNow(
-        new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }),
-      );
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return <span className="font-mono text-[11px] text-white/40 tabular-nums">{now}</span>;
-}
+import { Magnetic, CountUp } from "./primitives";
+import { PROJECTS, STATS, MARQUEE } from "./data";
 
 export function Hero() {
   const reduced = useReducedMotion();
-  const [step, setStep] = useState(reduced ? STEPS.length : 0);
-  const [chars, setChars] = useState(0);
-  const [phase, setPhase] = useState<"typing" | "output">(reduced ? "output" : "typing");
-  const [progress, setProgress] = useState(reduced ? 100 : 0);
-  const finished = step >= STEPS.length;
-
-  useEffect(() => {
-    if (reduced || finished) return;
-    const current = STEPS[step]!;
-
-    if (phase === "typing") {
-      if (chars < current.cmd.length) {
-        const id = setTimeout(() => setChars((c) => c + 1), 38);
-        return () => clearTimeout(id);
-      }
-      const id = setTimeout(() => setPhase("output"), 260);
-      return () => clearTimeout(id);
-    }
-
-    if (current.progress) {
-      if (progress < 100) {
-        const id = setTimeout(() => setProgress((p) => Math.min(100, p + 4)), 40);
-        return () => clearTimeout(id);
-      }
-      const id = setTimeout(() => setStep((s) => s + 1), 500);
-      return () => clearTimeout(id);
-    }
-
-    const id = setTimeout(() => {
-      setStep((s) => s + 1);
-      setChars(0);
-      setPhase("typing");
-    }, 380);
-    return () => clearTimeout(id);
-  }, [reduced, finished, step, chars, phase, progress]);
-
-  const filled = Math.round((progress / 100) * BAR_WIDTH);
 
   return (
-    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24">
-      <div className="mx-auto w-full max-w-[1160px] px-5 md:px-8">
-        <div className="relative overflow-hidden rounded-[18px] bg-ink shadow-[0_40px_80px_-30px_rgba(20,24,28,0.45)]">
-          <div className="pointer-events-none absolute inset-0 grid-bg-dark" aria-hidden />
+    <section className="relative pt-8 pb-14 md:pt-12 md:pb-20 border-b border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#071324] text-slate-900 dark:text-white overflow-hidden">
+      {/* Soft Radiant Glow Background Effects */}
+      <div className="pointer-events-none absolute -top-12 left-1/3 w-[650px] h-[380px] bg-gradient-to-tr from-blue-600/20 via-indigo-500/15 to-cyan-400/20 blur-[140px] rounded-full" />
+      <div className="pointer-events-none absolute bottom-0 right-10 w-[500px] h-[300px] bg-blue-600/10 blur-[130px] rounded-full" />
+      <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" aria-hidden />
 
-          {/* top bar */}
-          <div className="relative flex items-center gap-3 border-b border-white/10 px-4 py-3">
-            <span className="flex gap-1.5" aria-hidden>
-              <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
-              <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
-              <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+      <div className="mx-auto w-full max-w-[1400px] px-5 md:px-8 relative z-10">
+        
+        {/* Top Status Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-slate-200/80 dark:border-slate-800/80">
+          <div className="flex items-center gap-3 font-sans text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
             </span>
-            <span className="font-mono text-[11px] text-white/50">abishanan — zsh</span>
-            <span className="ml-auto">
-              <Clock />
-            </span>
+            <span className="font-semibold text-slate-800 dark:text-white">Abishanan Pathmarajah</span>
+            <span className="opacity-40">•</span>
+            <span>Jaffna, Sri Lanka</span>
           </div>
 
-          <div className="relative px-5 py-6 md:px-10 md:py-10">
-            {/* boot log */}
-            <div className="font-mono text-[13px] leading-relaxed md:text-sm">
-              {STEPS.map((s, i) => {
-                if (i > step) return null;
-                const isCurrent = i === step;
-                const text = isCurrent && !reduced && phase === "typing" ? s.cmd.slice(0, chars) : s.cmd;
-                const showOut = !isCurrent || reduced || phase === "output";
-                return (
-                  <div key={s.cmd} className="mb-1.5">
-                    <p className="text-white/85">
-                      <span className="text-blue">$</span> {text}
-                      {isCurrent && !reduced && phase === "typing" && (
-                        <span
-                          className="ml-0.5 inline-block h-[1em] w-[7px] translate-y-[2px] bg-white/80"
-                          style={{ animation: "blink 1s step-end infinite" }}
-                        />
-                      )}
-                    </p>
-                    {showOut && s.out && (
-                      <p className="text-term-green">
-                        <span className="text-white/30">→</span> {s.out}
-                      </p>
-                    )}
-                    {showOut && s.progress && (
-                      <>
-                        <p className="text-white/60">
-                          <span className="text-white/30">→</span>{" "}
-                          <span className="text-amber">
-                            {"█".repeat(filled)}
-                            <span className="text-white/25">{"·".repeat(BAR_WIDTH - filled)}</span>
-                          </span>{" "}
-                          <span className="tabular-nums">{progress}%</span>
-                        </p>
-                        {progress === 100 && s.done && (
-                          <p className="text-term-green">
-                            <span className="text-white/30">→</span> {s.done}
-                          </p>
-                        )}
-                      </>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* hero content */}
-            {finished && (
-              <motion.div
-                initial={reduced ? false : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-10 border-t border-white/10 pt-10"
-              >
-                <span className="inline-flex items-center gap-2 rounded-full border border-term-green/30 bg-term-green/10 px-3 py-1 font-mono text-[11px] text-term-green">
-                  ✓ build successful — 1.4s
-                </span>
-                <h1 className="mt-6 max-w-3xl font-display text-[34px] leading-[1.08] font-bold text-white sm:text-[42px] md:text-[52px]">
-                  Building{" "}
-                  <span className="bg-gradient-to-r from-[#6f86ff] to-blue bg-clip-text text-transparent">
-                    full-stack
-                  </span>{" "}
-                  software that ships — not just compiles.
-                </h1>
-                <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-white/60">
-                  Computer Science undergraduate and intern software engineer from Jaffna, Sri
-                  Lanka. React, Node.js and Laravel by day — honest about what I'm still learning,
-                  always.
-                </p>
-
-                <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-white/10 pt-8 md:grid-cols-4">
-                  {STATS.map((s) => (
-                    <div key={s.label}>
-                      <dt className="font-display text-3xl font-bold text-white tabular-nums">
-                        <CountUp to={s.value} suffix={s.suffix} raw={s.raw ?? false} start />
-                      </dt>
-                      <dd className="mt-1 font-mono text-[11px] leading-snug text-white/45">
-                        {s.label}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-
-                <div className="mt-10 flex flex-wrap gap-3">
-                  <Magnetic
-                    href="#projects"
-                    className="rounded-xl bg-white px-5 py-3 font-mono text-[13px] font-medium text-ink hover:bg-white/90"
-                  >
-                    $ view ./projects
-                  </Magnetic>
-                  <Magnetic
-                    href="#contact"
-                    className="rounded-xl border border-white/25 px-5 py-3 font-mono text-[13px] font-medium text-white/80 hover:border-white/50 hover:text-white"
-                  >
-                    $ ./contact.sh
-                  </Magnetic>
-                </div>
-              </motion.div>
-            )}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50/80 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/60 font-sans text-xs font-medium text-blue-700 dark:text-blue-300 shadow-sm">
+            <span>BSc (Hons) Computer Science</span>
           </div>
         </div>
 
-        {finished && (
-          <motion.p
-            initial={reduced ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="mt-8 text-center font-mono text-[11px] text-ink-soft"
+        {/* Bento Grid Layout */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          
+          {/* Left Hero Card with Profile Image + Sentences (8 Cols) */}
+          <motion.div
+            initial={reduced ? false : { opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-8 flex flex-col justify-between rounded-3xl border border-blue-100 dark:border-blue-900/40 bg-gradient-to-br from-blue-50/70 via-white to-slate-50 dark:from-[#0a192f] dark:via-[#071324] dark:to-[#040c18] p-7 md:p-9 shadow-xl shadow-blue-950/5 relative overflow-hidden group backdrop-blur-sm"
           >
-            <span style={{ animation: "blink 1.6s step-end infinite" }}>scroll to explore ↓</span>
-          </motion.p>
-        )}
+            <div className="pointer-events-none absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all duration-700" />
+            
+            <div>
+              <div className="flex items-center justify-between gap-3 mb-6">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-blue-200 dark:border-blue-800/80 bg-blue-50/90 dark:bg-blue-950/80 font-sans text-xs font-semibold text-blue-700 dark:text-blue-300 shadow-sm">
+                  ✨ High-Impact Digital Ecosystems
+                </span>
+              </div>
+
+              {/* Side-by-Side: Image on Left + Text on Right */}
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 md:gap-8">
+                
+                {/* Profile Picture Card on Left */}
+                <div className="shrink-0 w-44 sm:w-52 md:w-56 relative group/img">
+                  <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-500 opacity-30 blur-md group-hover/img:opacity-60 transition duration-500" />
+                  <div className="aspect-[4/5] w-full rounded-2xl overflow-hidden border-2 border-blue-200 dark:border-blue-600/60 shadow-2xl relative">
+                    <img
+                      src="/images/profile.jpg"
+                      alt="Abishanan Pathmarajah"
+                      className="w-full h-full object-cover object-center group-hover/img:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
+                    
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 p-2 rounded-xl bg-[#0a192f]/90 backdrop-blur-md border border-blue-500/40 text-center shadow-lg">
+                      <span className="font-sans text-[11px] font-semibold text-emerald-400 flex items-center justify-center gap-1.5">
+                        <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                        Available for Hire
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sentences & Headline */}
+                <div className="flex-1">
+                  <h1 className="font-display text-[30px] sm:text-[40px] md:text-[46px] font-bold leading-[1.1] tracking-tight text-[#0a192f] dark:text-white">
+                    Engineering the Foundation for{" "}
+                    <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-600 dark:from-blue-400 dark:to-cyan-300 bg-clip-text text-transparent">
+                      Tomorrow’s Digital Ecosystems
+                    </span>
+                  </h1>
+
+                  <p className="mt-4 text-[15px] md:text-[16px] leading-relaxed text-slate-600 dark:text-slate-300">
+                    Turning raw ideas into fully realized software platforms with precise engineering, modern tools, and seamless performance.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* CTAs Bar */}
+            <div className="mt-6 flex flex-wrap items-center gap-3 pt-5 border-t border-slate-200 dark:border-slate-800">
+              <Magnetic
+                href="#projects"
+                className="rounded-xl bg-[#0a192f] dark:bg-blue-600 px-6 py-2.5 font-sans text-xs font-semibold text-white hover:bg-blue-900 dark:hover:bg-blue-500 shadow-lg shadow-blue-950/20 transition-all"
+              >
+                Explore Work ↓
+              </Magnetic>
+
+              <Magnetic
+                href="#contact"
+                className="rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-6 py-2.5 font-sans text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-600 dark:hover:border-blue-400 transition-all shadow-sm"
+              >
+                Get in Touch
+              </Magnetic>
+
+              <Magnetic
+                href="/cv.pdf"
+                className="rounded-xl border border-blue-200 dark:border-blue-800/80 bg-blue-50/80 dark:bg-blue-950/60 px-6 py-2.5 font-sans text-xs font-semibold text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-all inline-flex items-center gap-1.5 shadow-sm"
+              >
+                <span>View CV</span>
+                <span className="text-[11px]">↗</span>
+              </Magnetic>
+            </div>
+          </motion.div>
+
+          {/* Right Side Widgets (4 Cols) */}
+          <div className="lg:col-span-4 flex flex-col gap-4">
+
+            {/* Bento Metric Counter Card */}
+            <motion.div
+              initial={reduced ? false : { opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0a192f]/80 p-5 shadow-xl shadow-blue-950/5 flex-1 flex flex-col justify-between"
+            >
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5 mb-3">
+                <span className="font-sans text-[11px] uppercase tracking-wider text-blue-700 dark:text-blue-400 font-bold">
+                  Performance Metrics
+                </span>
+                <span className="h-2 w-2 rounded-full bg-blue-600 dark:bg-blue-400" />
+              </div>
+
+              <div className="grid grid-cols-3 gap-2.5">
+                {STATS.map((s) => (
+                  <div key={s.label} className="p-3 rounded-2xl bg-slate-50 dark:bg-blue-950/40 border border-slate-100 dark:border-blue-800/40 hover:border-blue-500/40 transition-colors text-center">
+                    <div className="font-display text-xl md:text-2xl font-bold text-[#0a192f] dark:text-white tabular-nums">
+                      <CountUp to={s.value} suffix={s.suffix} raw={s.raw ?? false} start />
+                    </div>
+                    <div className="mt-1 font-sans text-[11px] text-slate-500 dark:text-blue-200/70 leading-tight">
+                      {s.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Bento Tech Stack Interactive Badge Box */}
+            <motion.div
+              initial={reduced ? false : { opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0a192f]/80 p-5 shadow-xl shadow-blue-950/5"
+            >
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5 mb-3">
+                <span className="font-sans text-[11px] uppercase tracking-wider text-blue-700 dark:text-blue-400 font-bold">
+                  Ecosystem Stack
+                </span>
+                <span className="h-2 w-2 rounded-full bg-blue-600 dark:bg-blue-400" />
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                {MARQUEE.slice(0, 8).map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 rounded-xl border border-blue-200 dark:border-blue-800/60 bg-blue-50/60 dark:bg-blue-950/60 font-sans text-xs text-blue-900 dark:text-blue-200 hover:border-blue-500 hover:bg-blue-600 hover:text-white transition-all cursor-default font-semibold shadow-sm"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+          </div>
+
+        </div>
+
       </div>
     </section>
   );
 }
+
+
+
+
+
+
+

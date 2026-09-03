@@ -8,32 +8,48 @@
   --font-display: "Space Grotesk", ui-sans-serif, sans-serif;
   --font-sans: "Inter", ui-sans-serif, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --color-paper: #fafaf7;
-  --color-surface: #ffffff;
-  --color-ink: #14181c;
-  --color-ink-soft: #5c6570;
-  --color-line: #e4e1da;
-  --color-blue: #3452ff;
-  --color-blue-soft: #edf0ff;
-  --color-amber: #ff7a29;
-  --color-amber-soft: #fff1e6;
-  --color-term-green: #4ade80;
+  --color-paper: #ffffff;
+  --color-surface: #f4f6fc;
+  --color-ink: #0a192f;
+  --color-ink-soft: #4a5b78;
+  --color-line: #e2e8f0;
+  --color-blue: #1e40af;
+  --color-blue-soft: #eff6ff;
+  --color-amber: #2563eb;
+  --color-amber-soft: #dbeafe;
+  --color-term-green: #10b981;
 }
 
 @utility grid-bg {
   background-image:
-    linear-gradient(to right, rgba(20, 24, 28, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(20, 24, 28, 0.06) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black 40%, transparent 100%);
+    linear-gradient(to right, rgba(30, 64, 175, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 64, 175, 0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 85% 75% at 50% 30%, black 40%, transparent 100%);
 }
 
-@utility grid-bg-dark {
+@utility dot-grid-bg {
+  background-image: radial-gradient(rgba(30, 64, 175, 0.12) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+@utility hero-mesh-bg {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 30%, black 30%, transparent 100%);
+    radial-gradient(at 15% 15%, rgba(30, 64, 175, 0.1) 0px, transparent 50%),
+    radial-gradient(at 85% 25%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 75%, rgba(14, 165, 233, 0.06) 0px, transparent 50%);
+}
+
+@utility dynamic-mesh-bg {
+  background: linear-gradient(135deg, #0a0f1d 0%, #0d1b2a 40%, #1b263b 70%, #0a0f1d 100%);
+  background-size: 400% 400%;
+  animation: gradient-flow 15s ease infinite;
+}
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @utility focus-ring {
@@ -197,8 +213,13 @@
   }
 
   body {
-    background-color: var(--color-background);
+    background-color: #fafafa;
     color: var(--color-foreground);
+    background-image: 
+      linear-gradient(to right, rgba(30, 64, 175, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(30, 64, 175, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-attachment: fixed;
   }
 }
 

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bgGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a192f"/>
+      <stop offset="50%" stop-color="#071324"/>
+      <stop offset="100%" stop-color="#040c18"/>
+    </linearGradient>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="128" height="128" rx="32" fill="url(#bgGlow)"/>
+  <rect width="120" height="120" x="4" y="4" rx="28" fill="none" stroke="url(#brandGrad)" stroke-width="4" stroke-opacity="0.8"/>
+
+  <!-- Code Bracket Symbols & Initials -->
+  <path d="M 32 44 L 18 64 L 32 84" fill="none" stroke="#38bdf8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+  <path d="M 96 44 L 110 64 L 96 84" fill="none" stroke="#38bdf8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+
+  <!-- AP Monogram -->
+  <text x="64" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="48" font-weight="900" fill="url(#brandGrad)" text-anchor="middle" filter="url(#glow)">AP</text>
+
+  <!-- Live Emerald Status Pulse Dot -->
+  <circle cx="104" cy="24" r="8" fill="#10b981"/>
+  <circle cx="104" cy="24" r="12" fill="none" stroke="#10b981" stroke-width="2" stroke-opacity="0.6"/>
+</svg>
