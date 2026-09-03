@@ -213,31 +213,32 @@ export function Experience() {
           <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-gradient-to-br from-blue-600/20 via-indigo-500/10 to-cyan-400/20 blur-3xl" />
           <div className="pointer-events-none absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-blue-600/15 blur-3xl" />
 
-          {/* Mobile / Tablet View: Stacked Timeline Experience Cards (clean & readable without awkward horizontal scroll) */}
-          <div className="lg:hidden divide-y divide-blue-900/50 p-5 sm:p-6 space-y-6 divide-y-reverse relative z-10">
+          {/* Mobile / Tablet View: Stacked Responsive Experience Cards */}
+          <div className="lg:hidden p-4 sm:p-6 space-y-4 relative z-10">
             {EXPERIENCES.map((exp) => (
-              <div key={exp.company} className="pt-6 first:pt-0 space-y-4">
+              <div
+                key={exp.company}
+                className="rounded-2xl border border-blue-900/60 bg-blue-950/40 p-4 sm:p-5 space-y-3.5 shadow-lg backdrop-blur-xs"
+              >
                 {/* Header: Company & Role */}
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-blue-500/50 bg-white p-1 shadow-md shadow-blue-600/20 flex items-center justify-center">
-                      <img
-                        src={exp.logo}
-                        alt={`${exp.company} logo`}
-                        className="h-full w-full object-contain"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-display text-base font-bold text-white leading-snug">
-                        {exp.company}
-                      </h3>
-                      <p className="font-sans text-xs text-blue-400 font-semibold mt-0.5">
-                        {exp.role}
-                      </p>
-                      <p className="font-sans text-[11px] text-slate-400">
-                        {exp.location}
-                      </p>
-                    </div>
+                <div className="flex items-start gap-3">
+                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-blue-500/50 bg-white p-1 shadow-md shadow-blue-600/20 flex items-center justify-center">
+                    <img
+                      src={exp.logo}
+                      alt={`${exp.company} logo`}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-display text-base font-bold text-white leading-snug truncate">
+                      {exp.company}
+                    </h3>
+                    <p className="font-sans text-xs text-blue-400 font-semibold mt-0.5">
+                      {exp.role}
+                    </p>
+                    <p className="font-sans text-[11px] text-slate-400">
+                      {exp.location}
+                    </p>
                   </div>
                 </div>
 
@@ -272,7 +273,7 @@ export function Experience() {
                 {/* Bullets */}
                 <ul className="space-y-2 pt-1">
                   {exp.bullets.map((b) => (
-                    <li key={b} className="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed">
+                    <li key={b} className="flex items-start gap-2 text-xs text-slate-300 leading-relaxed">
                       <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-blue-400" />
                       <span>{b}</span>
                     </li>
@@ -280,7 +281,7 @@ export function Experience() {
                 </ul>
 
                 {/* Tech Stack */}
-                <div className="pt-2">
+                <div className="pt-2 border-t border-blue-900/40">
                   <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
                     Technologies
                   </span>
@@ -288,7 +289,7 @@ export function Experience() {
                     {exp.techStack.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-0.5 rounded-md border border-blue-800/60 bg-blue-950/70 font-sans text-[10px] font-semibold text-blue-200"
+                        className="px-2.5 py-0.5 rounded-md border border-blue-800/60 bg-blue-950/80 font-sans text-[10px] font-semibold text-blue-200"
                       >
                         {tech}
                       </span>
@@ -298,6 +299,7 @@ export function Experience() {
               </div>
             ))}
           </div>
+
 
           {/* Desktop View: Full Enterprise Table (min-w-full on lg screens) */}
           <div className="hidden lg:block overflow-x-auto relative z-10">
@@ -421,7 +423,7 @@ function ProjectCard({
     <Tilt className="h-full rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#071324] shadow-sm hover:shadow-xl hover:shadow-blue-950/10 transition-all flex flex-col justify-between overflow-hidden group">
       <div>
         {/* Live Site Interactive Browser Container */}
-        <div className="relative aspect-[16/11] sm:aspect-[16/10] md:h-[400px] w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden group/header">
+        <div className="relative h-[440px] sm:h-[500px] md:h-[520px] w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden group/header">
           {project.demoUrl ? (
             <div className="absolute inset-0 z-10 bg-white dark:bg-slate-900 overflow-hidden">
               <iframe
@@ -654,7 +656,7 @@ export function Projects() {
         {activeProject && (
           <DialogContent className="w-[95vw] sm:max-w-4xl bg-white dark:bg-[#071324] border-slate-200 dark:border-slate-800 p-0 overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl max-h-[92vh] flex flex-col">
             {/* Live Interactive Project Window */}
-            <div className="relative h-[320px] sm:h-[480px] w-full shrink-0 overflow-hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+            <div className="relative h-[420px] sm:h-[580px] w-full shrink-0 overflow-hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
               {activeProject.demoUrl ? (
                 <div className="w-full h-full relative overflow-hidden bg-white dark:bg-slate-900">
                   <iframe
