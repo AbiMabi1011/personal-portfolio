@@ -420,108 +420,77 @@ function ProjectCard({
   return (
     <Tilt className="h-full rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#071324] shadow-sm hover:shadow-xl hover:shadow-blue-950/10 transition-all flex flex-col justify-between overflow-hidden group">
       <div>
-        {/* Project Visual Container: High-Res Mockup Showcase with Interactive Toggle */}
-        <div className="relative aspect-[16/10] sm:aspect-[16/9.5] w-full bg-slate-950 border-b border-slate-200 dark:border-slate-800 overflow-hidden group/header">
-          {showLiveEmbed && project.demoUrl ? (
+        {/* Live Site Interactive Browser Container */}
+        <div className="relative h-[340px] sm:h-[420px] w-full bg-slate-950 border-b border-slate-200 dark:border-slate-800 overflow-hidden group/header">
+          {project.demoUrl ? (
             <div className="absolute inset-0 z-10 bg-slate-950 overflow-hidden">
-              <iframe
-                src={project.demoUrl}
-                title={`${project.title} live interactive preview`}
-                onLoad={() => setIframeLoaded(true)}
-                className={cn(
-                  "w-full h-full border-0 transition-opacity duration-500",
-                  iframeLoaded ? "opacity-100" : "opacity-0"
-                )}
-                loading="lazy"
-                sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-              />
+              {/* Scaled Desktop Viewport so entire web layout, navbar, heroes and elements fit without being squished */}
+              <div className="w-[1280px] h-[850px] origin-top-left scale-[0.27] sm:scale-[0.44] md:scale-[0.48] lg:scale-[0.52] pointer-events-auto">
+                <iframe
+                  src={project.demoUrl}
+                  title={`${project.title} live preview`}
+                  onLoad={() => setIframeLoaded(true)}
+                  className={cn(
+                    "w-full h-full border-0 transition-opacity duration-500 bg-white",
+                    iframeLoaded ? "opacity-100" : "opacity-0"
+                  )}
+                  loading="lazy"
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                />
+              </div>
               {!iframeLoaded && (
                 <div className="absolute inset-0 flex items-center justify-center bg-slate-950/90 backdrop-blur-sm z-20 pointer-events-none">
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-blue-600/90 text-white font-mono text-[11px] shadow-lg animate-pulse">
                     <span className="h-2 w-2 rounded-full bg-white animate-ping" />
-                    <span>Loading Live Site...</span>
+                    <span>Connecting Live Site...</span>
                   </div>
                 </div>
               )}
             </div>
           ) : (
-            <div className="relative w-full h-full overflow-hidden bg-slate-900 group">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/20 pointer-events-none" />
+            <div className="w-full h-full flex items-center justify-center bg-slate-900 text-slate-400 font-mono text-xs">
+              Live Demo In Progress
             </div>
           )}
 
-          {/* Category & Status Tags */}
+          {/* Category & Live Badge */}
           <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 flex flex-wrap items-center gap-1.5 sm:gap-2 z-20 pointer-events-none">
-            <span className="px-2.5 py-1 rounded-md bg-[#0a192f]/90 backdrop-blur-md font-mono text-[9px] sm:text-[10px] font-semibold text-blue-300 border border-blue-500/30 shadow-xs">
+            <span className="px-2.5 py-1 rounded-md bg-[#0a192f]/95 backdrop-blur-md font-mono text-[9px] sm:text-[10px] font-semibold text-blue-300 border border-blue-500/30 shadow-xs">
               {project.category}
             </span>
-            {project.demoUrl && (
-              <span className="px-2 py-0.5 rounded-md bg-emerald-500/90 backdrop-blur-md font-mono text-[9px] font-bold text-white uppercase tracking-wider flex items-center gap-1 shadow-xs">
-                <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-                {showLiveEmbed ? "Active Embed" : "Live App"}
-              </span>
-            )}
+            <span className="px-2 py-0.5 rounded-md bg-emerald-500/95 backdrop-blur-md font-mono text-[9px] font-bold text-white uppercase tracking-wider flex items-center gap-1 shadow-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+              Live Site
+            </span>
           </div>
 
-          {/* Interactive Top-Right Controls */}
+          {/* Direct Full-Screen Live Opener in Top-Right */}
           {project.demoUrl && (
             <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 flex items-center gap-1.5 z-20">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowLiveEmbed(!showLiveEmbed);
-                }}
-                className={cn(
-                  "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-mono text-[10px] font-semibold backdrop-blur-md border shadow-md transition-all",
-                  showLiveEmbed
-                    ? "bg-emerald-600 text-white border-emerald-400"
-                    : "bg-slate-900/90 hover:bg-slate-800 text-slate-200 border-slate-700 hover:border-slate-500"
-                )}
-                title={showLiveEmbed ? "Switch back to screenshot" : "Load live scrollable site inside card"}
-              >
-                {showLiveEmbed ? (
-                  <>
-                    <X size={12} />
-                    <span>Exit Embed</span>
-                  </>
-                ) : (
-                  <>
-                    <Sparkles size={12} className="text-amber-400" />
-                    <span>Try In Card</span>
-                  </>
-                )}
-              </button>
-
               <a
                 href={project.demoUrl}
                 target="_blank"
                 rel="noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-600/90 hover:bg-blue-600 text-white font-mono text-[10px] font-semibold backdrop-blur-md border border-blue-400/40 shadow-md transition-all"
-                title="Launch in full separate window"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600/95 hover:bg-blue-500 text-white font-mono text-[11px] font-semibold backdrop-blur-md border border-blue-400/40 shadow-lg transition-all"
+                title="Open site in full browser tab"
               >
-                <span>Full Page</span>
-                <ExternalLink size={12} />
+                <span>Open Full Site</span>
+                <ExternalLink size={13} />
               </a>
             </div>
           )}
 
-          {/* Quick Details Floating Button */}
+          {/* Details floating button */}
           <button
             type="button"
             onClick={() => onSelect(project)}
-            className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-blue-600 text-white font-mono text-xs font-semibold backdrop-blur-md border border-slate-700 hover:border-blue-400/60 shadow-lg transition-all z-20"
+            className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/95 hover:bg-blue-600 text-white font-mono text-xs font-semibold backdrop-blur-md border border-slate-700 hover:border-blue-400/60 shadow-lg transition-all z-20"
           >
             <Eye size={13} />
-            <span>Architecture &amp; Details</span>
+            <span>Architecture &amp; Specs</span>
           </button>
         </div>
+
 
         {/* Domain / Status Bar */}
         <div className="flex items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800/80 px-3.5 sm:px-4 py-2 bg-slate-50/80 dark:bg-slate-900/50">
@@ -686,17 +655,29 @@ export function Projects() {
       {/* Interactive Project Detail Modal */}
       <Dialog open={!!activeProject} onOpenChange={(open) => !open && setActiveProject(null)}>
         {activeProject && (
-          <DialogContent className="w-[94vw] sm:max-w-3xl bg-white dark:bg-[#071324] border-slate-200 dark:border-slate-800 p-0 overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl max-h-[90vh] flex flex-col">
-            <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-slate-950">
-              <img
-                src={activeProject.image}
-                alt={activeProject.title}
-                className="w-full h-full object-cover object-top"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#071324] via-[#071324]/40 to-transparent" />
+          <DialogContent className="w-[95vw] sm:max-w-4xl bg-white dark:bg-[#071324] border-slate-200 dark:border-slate-800 p-0 overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl max-h-[92vh] flex flex-col">
+            {/* Live Interactive Project Window */}
+            <div className="relative h-[280px] sm:h-[400px] w-full shrink-0 overflow-hidden bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+              {activeProject.demoUrl ? (
+                <div className="w-full h-full relative overflow-hidden bg-slate-950">
+                  <div className="w-[1280px] h-[800px] origin-top-left scale-[0.30] sm:scale-[0.55] md:scale-[0.65] lg:scale-[0.70]">
+                    <iframe
+                      src={activeProject.demoUrl}
+                      title={`${activeProject.title} live preview`}
+                      className="w-full h-full border-0 bg-white"
+                      loading="lazy"
+                      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-slate-400 font-mono text-xs">
+                  Live Project Deployment Active
+                </div>
+              )}
               
-              <div className="absolute bottom-3 left-4 right-4 sm:bottom-4 sm:left-6 sm:right-6 flex flex-wrap items-end justify-between gap-3">
-                <div>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#071324] via-[#071324]/80 to-transparent p-4 sm:p-5 flex flex-wrap items-end justify-between gap-3 pointer-events-none">
+                <div className="pointer-events-auto">
                   <Badge className="bg-blue-600 text-white font-mono text-[10px] sm:text-xs mb-1.5 sm:mb-2">
                     {activeProject.category}
                   </Badge>
@@ -711,9 +692,9 @@ export function Projects() {
                     href={activeProject.demoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-mono text-xs font-semibold shadow-lg shadow-blue-600/30 transition-all shrink-0"
+                    className="pointer-events-auto inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-mono text-xs font-semibold shadow-lg shadow-blue-600/30 transition-all shrink-0"
                   >
-                    <span>Visit Live Site</span>
+                    <span>Open Full Screen Site</span>
                     <ExternalLink size={13} />
                   </a>
                 )}
