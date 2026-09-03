@@ -213,7 +213,94 @@ export function Experience() {
           <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-gradient-to-br from-blue-600/20 via-indigo-500/10 to-cyan-400/20 blur-3xl" />
           <div className="pointer-events-none absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-blue-600/15 blur-3xl" />
 
-          <div className="overflow-x-auto relative z-10">
+          {/* Mobile / Tablet View: Stacked Timeline Experience Cards (clean & readable without awkward horizontal scroll) */}
+          <div className="lg:hidden divide-y divide-blue-900/50 p-5 sm:p-6 space-y-6 divide-y-reverse relative z-10">
+            {EXPERIENCES.map((exp) => (
+              <div key={exp.company} className="pt-6 first:pt-0 space-y-4">
+                {/* Header: Company & Role */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-blue-500/50 bg-white p-1 shadow-md shadow-blue-600/20 flex items-center justify-center">
+                      <img
+                        src={exp.logo}
+                        alt={`${exp.company} logo`}
+                        className="h-full w-full object-contain"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-display text-base font-bold text-white leading-snug">
+                        {exp.company}
+                      </h3>
+                      <p className="font-sans text-xs text-blue-400 font-semibold mt-0.5">
+                        {exp.role}
+                      </p>
+                      <p className="font-sans text-[11px] text-slate-400">
+                        {exp.location}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Period Badge */}
+                <div className="flex items-center">
+                  <span className="inline-flex items-center gap-1.5 font-sans text-[11px] font-bold text-blue-200 bg-blue-950/90 border border-blue-800/80 px-2.5 py-1 rounded-lg shadow-xs">
+                    <Calendar size={12} className="text-blue-400" />
+                    {exp.date}
+                  </span>
+                </div>
+
+                {/* Subtitle / Focus */}
+                <p className="font-sans text-xs font-semibold text-slate-200 leading-relaxed">
+                  {exp.subtitle}
+                </p>
+
+                {/* Impact Chips */}
+                {exp.impact && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {exp.impact.map((imp) => (
+                      <span
+                        key={imp}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-blue-950/90 border border-blue-800/80 font-sans text-[10px] font-bold text-blue-200 shadow-xs"
+                      >
+                        <Sparkles size={11} className="text-blue-400 shrink-0" />
+                        {imp}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Bullets */}
+                <ul className="space-y-2 pt-1">
+                  {exp.bullets.map((b) => (
+                    <li key={b} className="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed">
+                      <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-blue-400" />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Tech Stack */}
+                <div className="pt-2">
+                  <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
+                    Technologies
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {exp.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-0.5 rounded-md border border-blue-800/60 bg-blue-950/70 font-sans text-[10px] font-semibold text-blue-200"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop View: Full Enterprise Table (min-w-full on lg screens) */}
+          <div className="hidden lg:block overflow-x-auto relative z-10">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-blue-900/80 bg-[#0b1d3a]/90 font-sans text-xs font-bold uppercase tracking-wider text-blue-300">
@@ -317,6 +404,7 @@ export function Experience() {
   );
 }
 
+
 function ProjectCard({
   project,
   featured,
@@ -332,7 +420,7 @@ function ProjectCard({
     <Tilt className="h-full rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#071324] shadow-sm hover:shadow-xl hover:shadow-blue-950/10 transition-all flex flex-col justify-between overflow-hidden group">
       <div>
         {/* Direct Scrollable Live Interactive Preview Header */}
-        <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+        <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full bg-slate-950 border-b border-slate-200 dark:border-slate-800 overflow-hidden">
           {project.demoUrl ? (
             <div className="absolute inset-0 z-10 bg-slate-950 overflow-hidden">
               <iframe
@@ -363,60 +451,60 @@ function ProjectCard({
             />
           )}
 
-          <div className="absolute top-3 left-3 flex items-center gap-2 z-20 pointer-events-none">
-            <span className="px-2.5 py-1 rounded-md bg-[#0a192f]/90 backdrop-blur-md font-mono text-[10px] text-blue-300 border border-blue-500/30">
+          <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 flex flex-wrap items-center gap-1.5 sm:gap-2 z-20 pointer-events-none">
+            <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[#0a192f]/90 backdrop-blur-md font-mono text-[9px] sm:text-[10px] text-blue-300 border border-blue-500/30">
               {project.category}
             </span>
             {project.demoUrl && (
-              <span className="px-2 py-0.5 rounded-md bg-emerald-500/90 backdrop-blur-md font-mono text-[9px] font-bold text-white uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Live &amp; Scrollable
+              <span className="px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-md bg-emerald-500/90 backdrop-blur-md font-mono text-[8px] sm:text-[9px] font-bold text-white uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Live
               </span>
             )}
           </div>
 
           <button
             onClick={() => onSelect(project)}
-            className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600/90 hover:bg-blue-600 text-white font-mono text-xs font-semibold backdrop-blur-md border border-blue-400/40 shadow-lg transition-all z-20"
+            className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-blue-600/95 hover:bg-blue-600 text-white font-mono text-[11px] sm:text-xs font-semibold backdrop-blur-md border border-blue-400/40 shadow-lg transition-all z-20"
           >
-            <Eye size={14} />
-            <span>Architecture &amp; Details</span>
+            <Eye size={13} className="sm:size-[14px]" />
+            <span>Details</span>
           </button>
         </div>
 
         {/* Domain / Status Bar */}
-        <div className="flex items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800/80 px-4 py-2 bg-slate-50/80 dark:bg-slate-900/50">
-          <span className="inline-flex items-center gap-1.5 font-sans text-xs font-semibold text-blue-600 dark:text-blue-400">
-            <span className="h-2 w-2 rounded-full bg-blue-500" />
-            {project.title}
+        <div className="flex items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800/80 px-3.5 sm:px-4 py-2 bg-slate-50/80 dark:bg-slate-900/50">
+          <span className="inline-flex items-center gap-1.5 font-sans text-xs font-semibold text-blue-600 dark:text-blue-400 truncate">
+            <span className="h-2 w-2 shrink-0 rounded-full bg-blue-500" />
+            <span className="truncate">{project.title}</span>
           </span>
-          <span className="truncate font-sans text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+          <span className="shrink-0 font-sans text-[11px] text-slate-500 dark:text-slate-400 font-medium">
             {project.path.replace("~/", "")}
           </span>
         </div>
 
         {/* Body Content */}
-        <div className={cn("p-6", featured && "md:p-8")}>
+        <div className={cn("p-4 sm:p-6", featured && "md:p-8")}>
           <h3
             className={cn(
               "font-display font-semibold text-[#0a192f] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors",
-              featured ? "text-2xl md:text-[28px]" : "text-xl",
+              featured ? "text-xl sm:text-2xl md:text-[28px]" : "text-lg sm:text-xl",
             )}
           >
             {project.title}
           </h3>
           <p
             className={cn(
-              "mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300",
+              "mt-2 sm:mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-300",
               featured && "max-w-2xl md:text-[15px]",
             )}
           >
             {project.body}
           </p>
-          <div className="mt-5 flex flex-wrap gap-2">
+          <div className="mt-4 sm:mt-5 flex flex-wrap gap-1.5 sm:gap-2">
             {project.tags.map((t) => (
               <span
                 key={t}
-                className="rounded-lg border border-blue-200/60 dark:border-blue-800/60 bg-blue-50/50 dark:bg-blue-950/50 px-3 py-1 font-mono text-[11px] text-blue-900 dark:text-blue-200 font-medium"
+                className="rounded-lg border border-blue-200/60 dark:border-blue-800/60 bg-blue-50/50 dark:bg-blue-950/50 px-2.5 py-0.5 sm:px-3 sm:py-1 font-mono text-[10px] sm:text-[11px] text-blue-900 dark:text-blue-200 font-medium"
               >
                 {t}
               </span>
@@ -425,22 +513,23 @@ function ProjectCard({
         </div>
       </div>
 
-      <div className="px-6 pb-6 pt-0 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/60 pt-4 mt-2">
+      <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-3 sm:pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/60">
         <button
           onClick={() => onSelect(project)}
           className="font-mono text-xs text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1 font-medium"
         >
-          View Architecture &amp; Highlights &rarr;
+          View Architecture &rarr;
         </button>
         {project.demoUrl && (
           <a
             href={project.demoUrl}
             target="_blank"
             rel="noreferrer"
-            className="text-slate-400 hover:text-blue-400 transition-colors p-1"
+            className="inline-flex items-center gap-1 text-slate-400 hover:text-blue-400 transition-colors p-1 text-xs"
             title="Live Demo"
           >
-            <ExternalLink size={16} />
+            <span className="sm:hidden font-mono text-[11px]">Demo</span>
+            <ExternalLink size={15} />
           </a>
         )}
       </div>
@@ -470,22 +559,22 @@ export function Projects() {
       id="projects"
       label="projects"
       title="A few things I've built end to end."
-      className="relative bg-gradient-to-b from-blue-50/70 via-slate-100/90 to-blue-50/50 dark:from-[#051122] dark:via-[#091b35] dark:to-[#051122] border-y border-blue-200/70 dark:border-blue-900/60 py-24 md:py-32 shadow-inner"
+      className="relative bg-gradient-to-b from-blue-50/70 via-slate-100/90 to-blue-50/50 dark:from-[#051122] dark:via-[#091b35] dark:to-[#051122] border-y border-blue-200/70 dark:border-blue-900/60 py-16 sm:py-24 md:py-32 shadow-inner"
     >
       {/* Radiant Background Glow accents */}
       <div className="pointer-events-none absolute -top-10 left-1/4 h-96 w-96 rounded-full bg-blue-500/10 dark:bg-blue-400/10 blur-[130px]" />
       <div className="pointer-events-none absolute -bottom-10 right-1/4 h-96 w-96 rounded-full bg-indigo-500/10 dark:bg-indigo-400/10 blur-[130px]" />
       
       {/* Category Filter & Search Header */}
-      <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        {/* Category Pills */}
-        <div className="flex flex-wrap gap-2">
+      <div className="mb-6 sm:mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
+        {/* Category Pills (horizontally scrollable on small screens) */}
+        <div className="flex overflow-x-auto pb-1 sm:pb-0 scrollbar-none gap-2 -mx-1 px-1">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
               className={cn(
-                "px-4 py-2 rounded-xl font-mono text-xs font-semibold transition-all duration-200 border",
+                "whitespace-nowrap px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-mono text-xs font-semibold transition-all duration-200 border shrink-0",
                 selectedCategory === cat
                   ? "bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-600/20"
                   : "bg-white dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-500/50"
@@ -497,14 +586,14 @@ export function Projects() {
         </div>
 
         {/* Live Search Box */}
-        <div className="relative max-w-xs w-full">
+        <div className="relative w-full md:max-w-xs">
           <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search projects or tech..."
-            className="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500 font-mono placeholder:text-slate-400"
+            className="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500 font-mono placeholder:text-slate-400 shadow-xs"
           />
           {searchQuery && (
             <button
@@ -544,8 +633,8 @@ export function Projects() {
       {/* Interactive Project Detail Modal */}
       <Dialog open={!!activeProject} onOpenChange={(open) => !open && setActiveProject(null)}>
         {activeProject && (
-          <DialogContent className="max-w-3xl bg-white dark:bg-[#071324] border-slate-200 dark:border-slate-800 p-0 overflow-hidden rounded-3xl shadow-2xl">
-            <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-950">
+          <DialogContent className="w-[94vw] sm:max-w-3xl bg-white dark:bg-[#071324] border-slate-200 dark:border-slate-800 p-0 overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl max-h-[90vh] flex flex-col">
+            <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-slate-950">
               <img
                 src={activeProject.image}
                 alt={activeProject.title}
@@ -553,41 +642,41 @@ export function Projects() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071324] via-[#071324]/40 to-transparent" />
               
-              <div className="absolute bottom-4 left-6 right-6 flex items-end justify-between">
+              <div className="absolute bottom-3 left-4 right-4 sm:bottom-4 sm:left-6 sm:right-6 flex items-end justify-between">
                 <div>
-                  <Badge className="bg-blue-600 text-white font-mono text-xs mb-2">
+                  <Badge className="bg-blue-600 text-white font-mono text-[10px] sm:text-xs mb-1.5 sm:mb-2">
                     {activeProject.category}
                   </Badge>
-                  <DialogTitle className="font-display text-2xl md:text-3xl font-bold text-white">
+                  <DialogTitle className="font-display text-lg sm:text-2xl md:text-3xl font-bold text-white leading-tight">
                     {activeProject.title}
                   </DialogTitle>
-                  <p className="font-mono text-xs text-blue-300 mt-1">{activeProject.path}</p>
+                  <p className="font-mono text-[11px] sm:text-xs text-blue-300 mt-0.5 sm:mt-1">{activeProject.path}</p>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 md:p-8 space-y-6 max-h-[60vh] overflow-y-auto">
+            <div className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6 overflow-y-auto flex-1">
               
               {/* Architecture & Summary */}
               <div>
                 <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-1.5">
                   <Layers size={14} /> System Overview &amp; Architecture
                 </h4>
-                <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                <p className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300">
                   {activeProject.longDescription}
                 </p>
               </div>
 
               {/* Engineering Highlights */}
               <div>
-                <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-1.5">
+                <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2.5 sm:mb-3 flex items-center gap-1.5">
                   <Sparkles size={14} /> Key Engineering Highlights
                 </h4>
                 <ul className="space-y-2">
                   {activeProject.highlights.map((h, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-300">
-                      <Check size={15} className="mt-0.5 shrink-0 text-emerald-500 font-bold" />
-                      <span>{h}</span>
+                    <li key={i} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
+                      <Check size={14} className="mt-0.5 shrink-0 text-emerald-500 font-bold" />
+                      <span className="leading-relaxed">{h}</span>
                     </li>
                   ))}
                 </ul>
@@ -595,10 +684,10 @@ export function Projects() {
 
               {/* Metrics */}
               {activeProject.metrics && activeProject.metrics.length > 0 && (
-                <div className="grid grid-cols-3 gap-3 pt-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 pt-1">
                   {activeProject.metrics.map((m, i) => (
-                    <div key={i} className="p-3 rounded-xl bg-blue-50/60 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/40 text-center">
-                      <span className="font-mono text-xs font-semibold text-blue-900 dark:text-blue-200">{m}</span>
+                    <div key={i} className="p-2.5 sm:p-3 rounded-xl bg-blue-50/60 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/40 text-center">
+                      <span className="font-mono text-[11px] sm:text-xs font-semibold text-blue-900 dark:text-blue-200">{m}</span>
                     </div>
                   ))}
                 </div>
@@ -607,11 +696,11 @@ export function Projects() {
               {/* Tech Stack */}
               <div>
                 <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Tech Stack</h4>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {activeProject.tags.map((t) => (
                     <span
                       key={t}
-                      className="px-3 py-1 rounded-lg border border-blue-200 dark:border-blue-800/60 bg-blue-50 dark:bg-blue-950/60 font-mono text-xs text-blue-900 dark:text-blue-200 font-medium"
+                      className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-lg border border-blue-200 dark:border-blue-800/60 bg-blue-50 dark:bg-blue-950/60 font-mono text-[11px] sm:text-xs text-blue-900 dark:text-blue-200 font-medium"
                     >
                       {t}
                     </span>
@@ -620,15 +709,15 @@ export function Projects() {
               </div>
 
               {/* Links Footer */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+              <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
                 {activeProject.githubUrl && (
                   <a
                     href={activeProject.githubUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 font-mono text-xs font-medium text-slate-800 dark:text-slate-200 hover:border-blue-500 transition-colors"
+                    className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 font-mono text-[11px] sm:text-xs font-medium text-slate-800 dark:text-slate-200 hover:border-blue-500 transition-colors"
                   >
-                    <Github size={15} /> Source Code
+                    <Github size={14} /> Source Code
                   </a>
                 )}
                 {activeProject.demoUrl && (
@@ -636,9 +725,9 @@ export function Projects() {
                     href={activeProject.demoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 font-mono text-xs font-semibold text-white transition-colors shadow-md"
+                    className="inline-flex items-center gap-1.5 sm:gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 font-mono text-[11px] sm:text-xs font-semibold text-white transition-colors shadow-md"
                   >
-                    <ExternalLink size={15} /> Open Live Site
+                    <ExternalLink size={14} /> Open Live Site
                   </a>
                 )}
               </div>
@@ -650,6 +739,7 @@ export function Projects() {
     </Section>
   );
 }
+
 
 export function Skills() {
   const [activeTab, setActiveTab] = useState<string>("All");
